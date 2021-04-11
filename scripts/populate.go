@@ -138,7 +138,7 @@ func main() {
 	check(err)
 	defer db.Close()
 
-	//populate()
-	//createReferences()
-	//createAuthors()
+	populate()
+	createReferences()
+	createAuthors()
 }
