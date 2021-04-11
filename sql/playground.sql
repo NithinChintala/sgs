@@ -1,6 +1,11 @@
 SELECT * FROM papers;
 SELECT * FROM `references`;
 SELECT * FROM users;
+SELECT * FROM tags;
+
+UPDATE users SET id = id - 1 WHERE id > 0;
+
+DELETE FROM users WHERE id = 1;
 
 SELECT first_name, last_name
 FROM users, authors

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"encoding/json"
 	"database/sql"
-	_ "github.com/NithinChintala/sgs/model"
+	"github.com/NithinChintala/sgs/dao"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -26,4 +27,9 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
+
+	result, err := db.Query("SELECT * FROM papers")
+	papers := dao.ReadPapers(result)
+	b, err := json.Marshal(papers)
+	fmt.Println(string(b))
 }
