@@ -60,6 +60,7 @@ func uniqueRandInt(start, end int, seen map[int]bool) int {
 }
 
 // Get count unique random numbers from [start, end]
+// if count > end - start + 1, then crash 
 func uniqueRands(start, end, count int) []int {
 	if count > end - start + 1 {
 		log.Fatal("Count larger than range")
