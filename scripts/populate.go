@@ -18,9 +18,11 @@ const (
 
 	NUM_USERS  = 75
 	NUM_PAPERS = 200
+	NUM_TAGS = 50
 
 	MAX_REFS = 4
 	MAX_AUTHS = 4
+	MAX_TAGS = 3
 
 	INSERT_USER = `
 	INSERT INTO users (first_name, last_name, username, password, email)
@@ -75,9 +77,10 @@ func uniqueRands(start, end, count int) []int {
 	return out
 }
 
-// Populate the `users` and `papers` table with random data
+// Populate the `users`, `papers`, and `tags` tables with random data
 func populate() {
 	
+	// users
 	for i := 0; i < NUM_USERS; i++ {
 		fn := fmt.Sprintf("fn%d", rand.Int()%200)
 		ln := fmt.Sprintf("ln%d", rand.Int()%200)
@@ -88,6 +91,7 @@ func populate() {
 		_, err := db.Exec(INSERT_USER, fn, ln, un, pw, email)
 		check(err)
 	}
+	// papers
 	for i := 0; i < NUM_PAPERS; i++ {
 		year := (rand.Int() % 61) + 1960
 		title := fmt.Sprintf("title%d", rand.Int()%200)
@@ -97,6 +101,11 @@ func populate() {
 		pages := fmt.Sprintf("%d-%d", start, start+(rand.Int()%20))
 
 		_, err := db.Exec(INSERT_PAPER, year, title, volume, issue, pages)
+		check(err)
+	}
+	// tags
+	for i := 0; i < NUM_TAGS; i++ {
+		_, err := db.Exec(INSERT_TAG, fmt.Sprintf("tag%d", i + 1))
 		check(err)
 	}
 }
@@ -124,7 +133,45 @@ func createReferences() {
 	}
 }
 
+// Map each paper to [1, 4] unique authors
 func createAuthors() {
+	results, err := db.Query("SELECT * FROM	papers")
+	check(err)
+	papers := dao.ReadPapers(results)
+
+	results, err = db.Query("SELECT * FROM users")
+	check(err)
+	users := dao.ReadUsers(results)
+	numUsers := len(users)
+
+	var numAuths int
+	for _, paper := range papers {
+		numAuths = (rand.Int() % MAX_AUTHS) + 1
+		for _, i := range uniqueRands(0, numUsers - 1, numAuths) {
+			_, err := db.Exec(INSERT_AUTHOR, users[i].Id, paper.Id)
+			check(err)
+		}
+	}
+}
+
+// Map each paper to [1, 3] unique tags
+func createKeywords() {
+	results, err := db.Query("SELECT * FROM papers")
+	check(err)
+	papers := dao.ReadPapers(results)
+
+	results, err = db.Query("SELECT * FROM tags")
+	check(err)
+	tags := dao.ReadTags(results)
+
+	var numKws int
+	for _, paper := range papers {
+		numKws = (rand.Int() % MAX_TAGS) + 1
+		for _, i := range uniqueRands(0, len(tags) - 1, numKws) {
+			_, err := db.Exec(INSERT_KEYWORD, paper.Id, tags[i].Id)
+			check(err)
+		}
+	}
 }
 
 func main() {
@@ -138,7 +185,8 @@ func main() {
 	check(err)
 	defer db.Close()
 
-	populate()
-	createReferences()
-	createAuthors()
+	//populate()
+	//createReferences()
+	//createAuthors()
+	//createKeywords()
 }
