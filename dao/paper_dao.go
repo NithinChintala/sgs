@@ -3,6 +3,8 @@ package dao
 import (
 	"database/sql"
 	"github.com/NithinChintala/sgs/model"
+	"net/http"
+	"encoding/json"
 	"log"
 )
 
@@ -20,4 +22,45 @@ func ReadPapers(result *sql.Rows) []model.Paper {
 	}
 
 	return papers
+}
+
+func GetPapersByUserId(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	query := `
+	SELECT papers.* FROM papers, authors, users
+	WHERE papers.id = authors.paper_id
+	AND authors.user_id = users.id
+	AND users.id = ?
+	`
+
+	results, err := db.Query(query)
+	if err != nil {
+		log.Fatal(err)
+	}
+	papers := ReadPapers(results)
+	json.NewEncoder(w).Encode(papers)
+}
+
+func GetPapersByTagWord(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	query := `
+	SELECT papers.* FROM papers, keywords, tags
+	WHERE papers.id = keywords.paper_id 
+	AND keywords.tag_id = tags.id 
+	AND tags.word = ?
+	`
+
+	results, err := db.Query(query)
+	if err != nil {
+		log.Fatal(err)
+	}
+	papers := ReadPapers(results)
+	json.NewEncoder(w).Encode(papers)
+}
+
+func GetPapers(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	results, err := db.Query("SELECT * FROM papers")
+	if err != nil {
+		log.Fatal(err)
+	}
+	papers := ReadPapers(results)
+	json.NewEncoder(w).Encode(papers)
 }

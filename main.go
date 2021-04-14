@@ -6,6 +6,8 @@ import (
 	"database/sql"
 	"github.com/NithinChintala/sgs/dao"
 	_ "github.com/go-sql-driver/mysql"
+	"net/http"
+	"log"
 )
 
 const (
@@ -28,8 +30,36 @@ func main() {
 	}
 	defer db.Close()
 
-	result, err := db.Query("SELECT * FROM papers")
-	papers := dao.ReadPapers(result)
-	b, err := json.Marshal(papers)
-	fmt.Println(string(b))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "webapp/" + r.URL.Path[1:])
+	})
+
+	http.HandleFunc("/api/papers", func(w http.ResponseWriter, r *http.Request) {
+		results, err := db.Query("SELECT * FROM papers")
+		if err != nil {
+			log.Fatal(err)
+		}
+		papers := dao.ReadPapers(results)
+		json.NewEncoder(w).Encode(papers)
+	})
+
+	http.HandleFunc("/api/users", func(w http.ResponseWriter, r *http.Request) {
+		results, err := db.Query("SELECT * FROM users")
+		if err != nil {
+			log.Fatal(err)
+		}
+		users := dao.ReadUsers(results)
+		json.NewEncoder(w).Encode(users)
+	})
+
+	http.HandleFunc("/api/tags", func(w http.ResponseWriter, r *http.Request) {
+		results, err := db.Query("SELECT * FROM tags")
+		if err != nil {
+			log.Fatal(err)
+		}
+		tags := dao.ReadTags(results)
+		json.NewEncoder(w).Encode(tags)
+	})
+
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
