@@ -2,13 +2,14 @@
     {{ template "Header" }} 
         {{ range . }}
         <div class ="paper">
-            <h3>{{ .Title }}</h3>
-            {{ .Journal }}
-            {{ .Year }}
-            {{ .Volume }}
-            {{ .Issue }}
-            {{ .Pages }}
-            <a>doi: {{ .Doi }}</a>
+            <h3><a href="papers/{{ .Id }}">{{ .Title }}</a></h3>
+            {{ if .Journal }} {{ .Journal }} {{ else }} No Journal {{ end }}
+            {{ .Year }}, <b>{{ .Volume }}</b>({{ .Issue }}), pp. {{ .Pages }}<br>
+            <a href="/">authors</a>
+            <a href="/">refrences</a>
+            <a href="/">tags</a>
+            <br>
+            <a>doi: {{ if .Doi }} {{ .Doi }} {{ end }}</a>
         </div>
         {{ end }}
     {{ template "Footer" }}

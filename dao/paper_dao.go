@@ -43,7 +43,7 @@ func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(papers)
 }
 
-func GetPapersByTagWord(w http.ResponseWriter, r *http.Request) {
+func GetPapersByTagWord(tag string) []model.Paper {
 	connect()
 	defer db.Close()
 
@@ -51,18 +51,28 @@ func GetPapersByTagWord(w http.ResponseWriter, r *http.Request) {
 	SELECT papers.* FROM papers, keywords, tags
 	WHERE papers.id = keywords.paper_id 
 	AND keywords.tag_id = tags.id 
-	AND tags.word = ?
+	AND tags.word =?
 	`
 
-	results, err := db.Query(query)
+	results, err := db.Query(query, tag)
 	if err != nil {
 		log.Fatal(err)
 	}
-	papers := ReadPapers(results)
-	json.NewEncoder(w).Encode(papers)
+	return ReadPapers(results)
 }
 
-func GetPapers(w http.ResponseWriter, r *http.Request) {
+func GetPapersById(id int) []model.Paper {
+	connect()
+	defer db.Close()
+
+	results, err := db.Query("SELECT * FROM papers WHERE id=?", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadPapers(results)
+}
+
+func GetPapers() []model.Paper {
 	connect()
 	defer db.Close()
 
@@ -70,6 +80,9 @@ func GetPapers(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	papers := ReadPapers(results)
-	json.NewEncoder(w).Encode(papers)
+	return ReadPapers(results)
+}
+
+func GetPapersAPI(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(GetPapers())
 }

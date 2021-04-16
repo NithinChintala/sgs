@@ -18,3 +18,7 @@ h3 {
 .paper {
     display: block;
 }
+
+ul#menu li {
+    display:inline;
+}

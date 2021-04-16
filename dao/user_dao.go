@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"github.com/NithinChintala/sgs/model"
 	"log"
-	"net/http"
 	"encoding/json"
+	"net/http"
 )
 
 func ReadUsers(result *sql.Rows) []model.User {
@@ -23,13 +23,16 @@ func ReadUsers(result *sql.Rows) []model.User {
 	return users
 }
 
-func GetUsers(w http.ResponseWriter, r *http.Request) {
+func GetUsers() []model.User {
 	connect()
 	defer db.Close()
 	results, err := db.Query("SELECT * FROM users")
 	if err != nil {
 		log.Fatal(err)
 	}
-	users := ReadPapers(results)
-	json.NewEncoder(w).Encode(users)
+	return ReadUsers(results)
+}
+
+func GetUsersAPI(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(GetUsers())
 }
