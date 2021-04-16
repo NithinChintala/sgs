@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>SGS</title>
-        <link rel="stylesheet" href="style/main.css" />
-    </head>
-    <body>
-        <h1>Scuffed Google Scholar</h1>
-        <p>
-            Scuffed Google Scholar (SGS) is an attempt to make a simplified version
-            of <a href="https://scholar.google.com">Google Scholar</a>.
-        </p>
-        <input type="text" placeholder="Search...">
-    </body>
+{{ define "Index" }}
+    {{ template "Header" }} 
+    <p>Scuffed Google Scholar (SGS) is an attempt to make a simplified version 
+        of <a href="https://scholar.google.com">Google Scholar</a>.
+    </p>
+    <input type="text" placeholder="Search...">
     <img src="https://archive.org/download/EscherMetamorphosisMachine/1953Escher-Relativity.jpg">
-    <ul>
-        <li><a href="/api/users">Users</a></li>
-        <li><a href="/api/papers">Papers</a></li>
-        <li><a href="/api/tags">Tags</a></li>
-    </ul>
-</html>
+    {{ template "Footer" }}
+{{ end }}

@@ -1,65 +1,32 @@
 package main
 
 import (
-	"fmt"
-	"encoding/json"
-	"database/sql"
+	_ "fmt"
+	_ "encoding/json"
+	_ "database/sql"
 	"github.com/NithinChintala/sgs/dao"
 	_ "github.com/go-sql-driver/mysql"
 	"net/http"
+	"html/template"
+	"github.com/gorilla/mux"
 	"log"
 )
 
-const (
-	USER = "root"
-	PASSWORD = "P@ssw0rd"
-	HOST = "localhost"
-	PORT = 3306
-	DB_NAME = "sgs"
-)
-
 var (
-	db *sql.DB
+	tmpl = template.Must(template.ParseGlob("webapp/*.html"))
 )
 
 func main() {
-	url := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", USER, PASSWORD, HOST, PORT, DB_NAME)
-	db, err := sql.Open("mysql", url)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+	// Setup the router
+	r := mux.NewRouter()
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("webapp/static/"))))
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "webapp/" + r.URL.Path[1:])
-	})
+	// Setup the API
+	api := r.PathPrefix("/api/").Subrouter()
+	api.HandleFunc("/papers", dao.GetPapers).Methods("GET")
+	api.HandleFunc("/users", dao.GetUsers).Methods("GET")
+	api.HandleFunc("/tags", dao.GetTags).Methods("GET")
 
-	http.HandleFunc("/api/papers", func(w http.ResponseWriter, r *http.Request) {
-		results, err := db.Query("SELECT * FROM papers")
-		if err != nil {
-			log.Fatal(err)
-		}
-		papers := dao.ReadPapers(results)
-		json.NewEncoder(w).Encode(papers)
-	})
-
-	http.HandleFunc("/api/users", func(w http.ResponseWriter, r *http.Request) {
-		results, err := db.Query("SELECT * FROM users")
-		if err != nil {
-			log.Fatal(err)
-		}
-		users := dao.ReadUsers(results)
-		json.NewEncoder(w).Encode(users)
-	})
-
-	http.HandleFunc("/api/tags", func(w http.ResponseWriter, r *http.Request) {
-		results, err := db.Query("SELECT * FROM tags")
-		if err != nil {
-			log.Fatal(err)
-		}
-		tags := dao.ReadTags(results)
-		json.NewEncoder(w).Encode(tags)
-	})
-
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	// Run the server
+	log.Fatal(http.ListenAndServe("localhost:8000", r))
 }

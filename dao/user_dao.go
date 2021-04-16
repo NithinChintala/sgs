@@ -23,7 +23,9 @@ func ReadUsers(result *sql.Rows) []model.User {
 	return users
 }
 
-func GetUsers(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func GetUsers(w http.ResponseWriter, r *http.Request) {
+	connect()
+	defer db.Close()
 	results, err := db.Query("SELECT * FROM users")
 	if err != nil {
 		log.Fatal(err)

@@ -22,7 +22,10 @@ func ReadTags(result *sql.Rows) []model.Tag {
 	return tags
 }
 
-func GetTags(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func GetTags(w http.ResponseWriter, r *http.Request) {
+	connect()
+	defer db.Close()
+
 	results, err := db.Query("SELECT * FROM tags")
 	if err != nil {
 		log.Fatal(err)

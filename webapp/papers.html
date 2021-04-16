@@ -1,0 +1,15 @@
+{{ define "Papers" }}
+    {{ template "Header" }} 
+        {{ range . }}
+        <div class ="paper">
+            <h3>{{ .Title }}</h3>
+            {{ .Journal }}
+            {{ .Year }}
+            {{ .Volume }}
+            {{ .Issue }}
+            {{ .Pages }}
+            <a>doi: {{ .Doi }}</a>
+        </div>
+        {{ end }}
+    {{ template "Footer" }}
+{{ end }}

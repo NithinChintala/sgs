@@ -24,7 +24,10 @@ func ReadPapers(result *sql.Rows) []model.Paper {
 	return papers
 }
 
-func GetPapersByUserId(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
+	connect()
+	defer db.Close()
+
 	query := `
 	SELECT papers.* FROM papers, authors, users
 	WHERE papers.id = authors.paper_id
@@ -40,7 +43,10 @@ func GetPapersByUserId(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	json.NewEncoder(w).Encode(papers)
 }
 
-func GetPapersByTagWord(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func GetPapersByTagWord(w http.ResponseWriter, r *http.Request) {
+	connect()
+	defer db.Close()
+
 	query := `
 	SELECT papers.* FROM papers, keywords, tags
 	WHERE papers.id = keywords.paper_id 
@@ -56,7 +62,10 @@ func GetPapersByTagWord(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	json.NewEncoder(w).Encode(papers)
 }
 
-func GetPapers(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+func GetPapers(w http.ResponseWriter, r *http.Request) {
+	connect()
+	defer db.Close()
+
 	results, err := db.Query("SELECT * FROM papers")
 	if err != nil {
 		log.Fatal(err)
