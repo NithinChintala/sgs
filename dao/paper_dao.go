@@ -42,6 +42,14 @@ func UpdatePaper(id int, paper model.Paper) {
 	}
 }
 
+func CreatePaper(paper model.Paper) {
+
+}
+
+func DeletePaper(id int) {
+
+}
+
 func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
 	connect()
 	defer db.Close()

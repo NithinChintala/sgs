@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	"github.com/NithinChintala/sgs/model"
 	"log"
-	"net/http"
-	"encoding/json"
 )
 
 func ReadTags(result *sql.Rows) []model.Tag {
@@ -22,7 +20,7 @@ func ReadTags(result *sql.Rows) []model.Tag {
 	return tags
 }
 
-func GetTags(w http.ResponseWriter, r *http.Request) {
+func GetTags() []model.Tag {
 	connect()
 	defer db.Close()
 
@@ -30,6 +28,5 @@ func GetTags(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	tags := ReadTags(results)
-	json.NewEncoder(w).Encode(tags)
+	return ReadTags(results)
 }

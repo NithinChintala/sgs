@@ -26,6 +26,10 @@ func Papers(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "Papers", dao.GetPapers())
 }
 
+func Tags(w http.ResponseWriter, r *http.Request) {
+	tmpl.ExecuteTemplate(w, "Tags", dao.GetTags())
+}
+
 func PapersByTagWord(w http.ResponseWriter, r *http.Request) {
 	tag := r.FormValue("tag")
 	log.Println(tag)
@@ -60,11 +64,13 @@ func main() {
 	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET", "POST")
 	r.HandleFunc("/users", Users).Methods("GET")
 
+	r.HandleFunc("/tags", Tags).Methods("GET")
+
 	// Setup the API
 	api := r.PathPrefix("/api/").Subrouter()
 	api.HandleFunc("/papers", dao.GetPapersAPI).Methods("GET")
 	api.HandleFunc("/users", dao.GetUsersAPI).Methods("GET")
-	api.HandleFunc("/tags", dao.GetTags).Methods("GET")
+	//api.HandleFunc("/tags", dao.GetTags).Methods("GET")
 
 	// Run the server
 	log.Println("Server running at http://localhost:8000")
