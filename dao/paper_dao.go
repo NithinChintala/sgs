@@ -24,6 +24,24 @@ func ReadPapers(result *sql.Rows) []model.Paper {
 	return papers
 }
 
+func UpdatePaper(id int, paper model.Paper) {
+	connect()
+	defer db.Close()
+
+	update := `
+	UPDATE papers
+	SET id=?, year=?, title=?, journal=?, volume=?, issue=?, pages=?, doi=?
+	WHERE id=?
+	`
+
+	_, err := db.Exec(update, paper.Id, paper.Year, paper.Title, 
+		paper.Journal, paper.Volume, paper.Issue, paper.Pages, paper.Doi,
+		paper.Id)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
 	connect()
 	defer db.Close()

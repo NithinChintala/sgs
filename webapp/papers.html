@@ -2,7 +2,7 @@
     {{ template "Header" }} 
         {{ range . }}
         <div class ="paper">
-            <h3><a href="papers/{{ .Id }}">{{ .Title }}</a></h3>
+            <h3><a href="/papers/{{ .Id }}">{{ .Title }}</a></h3>
             {{ if .Journal }} {{ .Journal }} {{ else }} No Journal {{ end }}
             {{ .Year }}, <b>{{ .Volume }}</b>({{ .Issue }}), pp. {{ .Pages }}<br>
             <a href="/">authors</a>

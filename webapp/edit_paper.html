@@ -1,14 +1,25 @@
 {{ define "EditPaper" }}
     {{ template "Header" }} 
     {{ range . }}
-        <label>Id</label><input type="text" name="id" value="{{ .Id }}"/><br/>
-        <label>Year</label><input type="text" name="year" value="{{ .Year }}"/><br />
-        <label>Title</label><input type="text" name="title" value="{{ .Title }}"/><br />
-        <label>Journal</label><input type="text" name="journal" value="{{ .Journal }}"/><br />
-        <label>Volume</label><input type="text" name="volume" value="{{ .Volume }}"/><br />
-        <label>Issue</label><input type="text" name="issue" value="{{ .Issue }}"/><br />
-        <label>Pages</label><input type="text" name="pages" value="{{ .Pages }}"/><br />
-        <label>Doi</label><input type="text" name="doi" value="{{ .Doi }}"/><br />
+    <form method="POST" action="/papers/{{ .Id }}">
+        <label>Id</label><br>
+        <input type="text" name="id" value="{{ .Id }}" readonly/><br>
+        <label>Year</label><br>
+        <input type="text" name="year" value="{{ .Year }}"/><br>
+        <label>Title</label><br>
+        <input type="text" name="title" value="{{ .Title }}"/><br>
+        <label>Journal</label><br>
+        <input type="text" name="journal" value="{{ .Journal }}"/><br>
+        <label>Volume</label><br>
+        <input type="text" name="volume" value="{{ .Volume }}"/><br>
+        <label>Issue</label><br>
+        <input type="text" name="issue" value="{{ .Issue }}"/><br>
+        <label>Pages</label><br>
+        <input type="text" name="pages" value="{{ .Pages }}"/><br>
+        <label>Doi</label><br>
+        <input type="text" name="doi" value="{{ .Doi }}"/><br><br>
+        <input type="submit" value="Update user" />
+    </form>
     {{ end }}
     {{ template "Footer" }}
 {{ end }}

@@ -16,12 +16,12 @@ const (
 
 var (
 	db *sql.DB
-	err error
 	url = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", user, password, host, port, db_name)
 )
 
 // Connect the global db var to the MySQL Server
 func connect() {
+	var err error
 	db, err = sql.Open("mysql", url)
 	if err != nil {
 		log.Fatal(err)

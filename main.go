@@ -5,6 +5,7 @@ import (
 	_ "encoding/json"
 	_ "fmt"
 	"github.com/NithinChintala/sgs/dao"
+	"github.com/NithinChintala/sgs/model"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"html/template"
@@ -36,11 +37,17 @@ func Users(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditPaper(w http.ResponseWriter, r *http.Request) {
-	args := mux.Vars(r)
-	id, _ := strconv.Atoi(args["id"])
-	paper := dao.GetPapersById(id)
+	if r.Method == "POST" {
+		newPaper := model.PaperFromForm(r)
+		dao.UpdatePaper(newPaper.Id, newPaper)
+		http.Redirect(w, r, "/papers", 301)
+	} else if r.Method == "GET" {
+		args := mux.Vars(r)
+		id, _ := strconv.Atoi(args["id"])
+		paper := dao.GetPapersById(id)
 
-	tmpl.ExecuteTemplate(w, "EditPaper", paper)
+		tmpl.ExecuteTemplate(w, "EditPaper", paper)
+	}
 }
 
 func main() {
@@ -50,7 +57,7 @@ func main() {
 	r.HandleFunc("/", Index).Methods("GET")
 	r.HandleFunc("/papers", Papers).Methods("GET")
 	r.Path("/papers/").Queries("tag","{[a-zA-Z0-9]+}").HandlerFunc(PapersByTagWord)
-	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET")
+	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET", "POST")
 	r.HandleFunc("/users", Users).Methods("GET")
 
 	// Setup the API
