@@ -24,6 +24,32 @@ func ReadPapers(result *sql.Rows) []model.Paper {
 	return papers
 }
 
+func GetPapers() []model.Paper {
+	connect()
+	defer db.Close()
+
+	results, err := db.Query("SELECT * FROM papers")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadPapers(results)
+}
+
+func GetPapersById(id int) []model.Paper {
+	connect()
+	defer db.Close()
+
+	results, err := db.Query("SELECT * FROM papers WHERE id=?", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadPapers(results)
+}
+
+func CreatePaper(paper model.Paper) {
+
+}
+
 func UpdatePaper(id int, paper model.Paper) {
 	connect()
 	defer db.Close()
@@ -42,12 +68,18 @@ func UpdatePaper(id int, paper model.Paper) {
 	}
 }
 
-func CreatePaper(paper model.Paper) {
-
-}
-
 func DeletePaper(id int) {
+	connect()
+	defer db.Close()
 
+	delete := `
+	DELETE FROM papers
+	WHERE id=?
+	`
+	_, err := db.Exec(delete, id)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
@@ -87,27 +119,9 @@ func GetPapersByTagWord(tag string) []model.Paper {
 	return ReadPapers(results)
 }
 
-func GetPapersById(id int) []model.Paper {
-	connect()
-	defer db.Close()
 
-	results, err := db.Query("SELECT * FROM papers WHERE id=?", id)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return ReadPapers(results)
-}
 
-func GetPapers() []model.Paper {
-	connect()
-	defer db.Close()
 
-	results, err := db.Query("SELECT * FROM papers")
-	if err != nil {
-		log.Fatal(err)
-	}
-	return ReadPapers(results)
-}
 
 func GetPapersAPI(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(GetPapers())

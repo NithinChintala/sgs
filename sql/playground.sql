@@ -1,5 +1,16 @@
 SELECT * FROM papers;
 SELECT * FROM `references`;
+
+DELETE FROM papers WHERE id=2;
+
+SELECT * FROM authors WHERE paper_id =2;
+
+UPDATE PAPERS SET
+`year`=2001, title='Structure of the Ku heterodimer bound to DNA and its implications for double-strand break repair', 
+journal='Nature', volume=412, issue=2, pages='607–614', doi='10.1038/35088000'
+WHERE id=1;
+SELECT * FROM papers;
+
 SELECT * FROM users;
 SELECT * FROM tags;
 SELECT * FROM authors;

@@ -18,8 +18,9 @@
         <input type="text" name="pages" value="{{ .Pages }}"/><br>
         <label>Doi</label><br>
         <input type="text" name="doi" value="{{ .Doi }}"/><br><br>
-        <input type="submit" value="Update user" />
+        <input type="submit" value="Update paper" />
     </form>
+    <a href="/papers/{{ .Id }}/delete">Delete Paper</a>
     {{ end }}
     {{ template "Footer" }}
 {{ end }}

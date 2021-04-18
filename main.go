@@ -54,6 +54,14 @@ func EditPaper(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func DeletePaper(w http.ResponseWriter, r *http.Request) {
+	log.Println("GOT DELETE")
+	args := mux.Vars(r)
+	id, _ := strconv.Atoi(args["id"])
+	dao.DeletePaper(id)
+	http.Redirect(w, r, "/papers", 301)
+}
+
 func main() {
 	// Setup the router
 	r := mux.NewRouter()
@@ -62,6 +70,7 @@ func main() {
 	r.HandleFunc("/papers", Papers).Methods("GET")
 	r.Path("/papers/").Queries("tag","{[a-zA-Z0-9]+}").HandlerFunc(PapersByTagWord)
 	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET", "POST")
+	r.HandleFunc("/papers/{id:[0-9]+}/delete", DeletePaper).Methods("GET")
 	r.HandleFunc("/users", Users).Methods("GET")
 
 	r.HandleFunc("/tags", Tags).Methods("GET")

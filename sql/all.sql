@@ -38,7 +38,7 @@ CREATE TABLE `sgs`.`papers` (
     `pages`   VARCHAR(20) NULL,
     `doi`     VARCHAR(100) NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`journal`) REFERENCES `sgs`.`journal` (`title`) 
+    FOREIGN KEY (`journal`) REFERENCES `sgs`.`journal` (`title`) ON DELETE SET NULL
 );
 
 -- Creates the tags table
@@ -58,8 +58,8 @@ CREATE TABLE `sgs`.`references` (
     `citer_id`  INT NOT NULL,
     `citee_id`   INT NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`citer_id`) REFERENCES `sgs`.`papers` (`id`),
-    FOREIGN KEY (`citee_id`) REFERENCES `sgs`.`papers` (`id`)
+    FOREIGN KEY (`citer_id`) REFERENCES `sgs`.`papers` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`citee_id`) REFERENCES `sgs`.`papers` (`id`) ON DELETE CASCADE
 );
 
 -- Create the authors table
@@ -69,8 +69,8 @@ CREATE TABLE `sgs`.`authors` (
     `user_id`  INT NOT NULL,
     `paper_id` INT NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `sgs`.`users` (`id`),
-    FOREIGN KEY (`paper_id`) REFERENCES `sgs`.`papers` (`id`)
+    FOREIGN KEY (`user_id`) REFERENCES `sgs`.`users` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`paper_id`) REFERENCES `sgs`.`papers` (`id`) ON DELETE CASCADE
 );
 
 -- Create the keywords table
@@ -80,6 +80,6 @@ CREATE TABLE `sgs`.`keywords` (
     `paper_id` INT NOT NULL,
     `tag_id`   INT NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`paper_id`) REFERENCES `sgs`.`papers` (`id`),
-    FOREIGN KEY (`tag_id`)   REFERENCES `sgs`.`tags` (`id`)
+    FOREIGN KEY (`paper_id`) REFERENCES `sgs`.`papers` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`tag_id`)   REFERENCES `sgs`.`tags` (`id`) ON DELETE CASCADE
 );

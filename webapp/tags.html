@@ -1,0 +1,11 @@
+{{ define "Tags" }}
+    {{ template "Header" }} 
+        {{ range . }}
+        <div class ="tag">
+            <h3><a href="/tags/{{ .Id }}">{{ .Word }}</a></h3>
+            Searches: {{ .Searches }}<br>
+            Last Search: {{ .LastSearch }}
+        </div>
+        {{ end }}
+    {{ template "Footer" }}
+{{ end }}
