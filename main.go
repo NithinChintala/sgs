@@ -51,6 +51,9 @@ func EditPaper(w http.ResponseWriter, r *http.Request) {
 		paper := dao.GetPapersById(id)
 
 		tmpl.ExecuteTemplate(w, "EditPaper", paper)
+	} else if r.Method == "DELETE" {
+		log.Println("GOT DELETE")
+		http.Redirect(w, r, "/papers", 301)
 	}
 }
 
@@ -80,7 +83,7 @@ func main() {
 	r.HandleFunc("/", Index).Methods("GET")
 	r.HandleFunc("/papers", Papers).Methods("GET")
 	r.Path("/papers/").Queries("tag","{[a-zA-Z0-9]+}").HandlerFunc(PapersByTagWord)
-	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET", "POST")
+	r.HandleFunc("/papers/{id:[0-9]+}", EditPaper).Methods("GET", "POST", "DELETE")
 	r.HandleFunc("/papers/{id:[0-9]+}/delete", DeletePaper).Methods("GET")
 	r.HandleFunc("/papers/create", CreatePaper).Methods("GET", "POST")
 	r.HandleFunc("/users", Users).Methods("GET")

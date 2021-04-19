@@ -1,0 +1,23 @@
+ # TODO
+ Change the uri to follow this syntax
+
+ 
+ GET /{model}
+ GET /{model}/{id}         => Shows the editor
+ POST /{model}/{id}/update => Updates the model
+ POST /{model}/{id}/delete => Deletes the model
+ POST /{model}/{id}/create => Creates the model
+
+ Optionally add a json API:
+
+ GET /api/{model}
+ GET /api/{model}/{id}
+
+ GET /papers?[tag|citer|citee|author]={val}
+ GET /api/papers?[tag|citer|citee|author]={val}
+
+ GET /authors?paper={id}
+ GET /api/authors?paper={id}
+
+ GET /tags?paper={id}
+ GET /api/tags?paper={id}

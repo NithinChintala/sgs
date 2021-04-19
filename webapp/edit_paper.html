@@ -1,7 +1,7 @@
 {{ define "EditPaper" }}
     {{ template "Header" }} 
     {{ range . }}
-    <form method="POST" action="/papers/{{ .Id }}">
+    <form id="form">
         <label>Id</label><br>
         <input type="text" name="id" value="{{ .Id }}" readonly/><br>
         <label>Year</label><br>
@@ -18,9 +18,11 @@
         <input type="text" name="pages" value="{{ .Pages }}"/><br>
         <label>Doi</label><br>
         <input type="text" name="doi" value="{{ .Doi }}"/><br><br>
-        <input type="submit" value="Update paper" />
+
+        <button onclick='setForm("POST","/papers/{{ .Id }}")'>Update</button>
+        <button onclick='setForm("DELETE","/papers/{{ .Id }}")'>Delete</button>
+        <button onclick='setForm("POST","/papers/create")'>Create</button>
     </form>
-    <a href="/papers/{{ .Id }}/delete">Delete Paper</a>
     {{ end }}
     {{ template "Footer" }}
 {{ end }}
