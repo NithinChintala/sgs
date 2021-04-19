@@ -131,10 +131,3 @@ func GetPapersByTagWord(tag string) []model.Paper {
 	return ReadPapers(results)
 }
 
-
-
-
-
-func GetPapersAPI(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(GetPapers())
-}

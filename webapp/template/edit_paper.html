@@ -19,9 +19,9 @@
         <label>Doi</label><br>
         <input type="text" name="doi" value="{{ .Doi }}"/><br><br>
 
-        <button onclick='setForm("POST","/papers/{{ .Id }}")'>Update</button>
-        <button onclick='setForm("DELETE","/papers/{{ .Id }}")'>Delete</button>
-        <button onclick='setForm("POST","/papers/create")'>Create</button>
+        <button onclick='setForm("POST","/papers/{{ .Id }}/update")'>Update</button>
+        <button onclick='setForm("POST","/papers/{{ .Id }}/delete")'>Delete</button>
+        <button onclick='setForm("POST","/papers/{{ .Id }}/create")'>Create</button>
     </form>
     {{ end }}
     {{ template "Footer" }}

@@ -21,3 +21,9 @@
 
  GET /tags?paper={id}
  GET /api/tags?paper={id}
+
+ server/
+    routes.go
+    run.go
+        - run()
+        - setup()
