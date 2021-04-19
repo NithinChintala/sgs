@@ -1,0 +1,26 @@
+{{ define "EditUser" }}
+    {{ template "Header" }} 
+    {{ range . }}
+    <form id="form">
+        <label>Id</label><br>
+        <input type="text" name="id" value="{{ .Id }}" readonly/><br>
+        <label>First Name</label><br>
+        <input type="text" name="firstName" value="{{ .FirstName }}"/><br>
+        <label>Last Name</label><br>
+        <input type="text" name="lastName" value="{{ .LastName }}"/><br>
+        <label>Username</label><br>
+        <input type="text" name="username" value="{{ .Username }}"/><br>
+        <label>Password</label><br>
+        <input type="text" name="password" value="{{ .Password }}"/><br>
+        <label>Email</label><br>
+        <input type="text" name="email" value="{{ .Email }}"/><br>
+        <label>Date of Birth</label><br>
+        <input type="text" name="dateOfBirth" value="{{ .DateOfBirth }}"/><br><br>
+
+        <button onclick='setForm("POST","/users/{{ .Id }}/update")'>Update</button>
+        <button onclick='setForm("POST","/users/{{ .Id }}/delete")'>Delete</button>
+        <button onclick='setForm("POST","/users/{{ .Id }}/create")'>Create</button>
+    </form>
+    {{ end }}
+    {{ template "Footer" }}
+{{ end }}

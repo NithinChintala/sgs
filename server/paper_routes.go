@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gorilla/mux"
 	"github.com/NithinChintala/sgs/dao"
 	"github.com/NithinChintala/sgs/model"
+	"github.com/gorilla/mux"
 )
 
 func (s *server) createPaper(w http.ResponseWriter, r *http.Request) {

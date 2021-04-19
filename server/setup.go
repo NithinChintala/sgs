@@ -1,23 +1,23 @@
 package server
 
 import (
-	"html/template"
-	"net/http"
-	"log"
 	"fmt"
+	"html/template"
+	"log"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
 const (
-	host = "localhost"
-	port = 8080
+	host     = "localhost"
+	port     = 8080
 	tmplGlob = "webapp/template/*.html"
 )
 
 type server struct {
 	router *mux.Router
-	tmpl *template.Template
+	tmpl   *template.Template
 }
 
 func (s *server) Run() {
@@ -55,7 +55,7 @@ func (s *server) routes() {
 	s.router.HandleFunc("/tags", s.getTags).Methods("GET")
 	s.router.HandleFunc("/tags/{id}", s.getTagById).Methods("GET")
 	s.router.HandleFunc("/tags/{id}/update", s.updateTag).Methods("POST")
-	s.router.HandleFunc("/tags/{id}/delete", s.deleteTag).Methods("POST")	
+	s.router.HandleFunc("/tags/{id}/delete", s.deleteTag).Methods("POST")
 }
 
 func (s *server) index(w http.ResponseWriter, r *http.Request) {

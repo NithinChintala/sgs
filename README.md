@@ -9,7 +9,8 @@ databases.
 
 # Why Go?
 I just wanted to get better with the language, so I decided to use it
-to make this. Also Go is a pretty cool language.
+to make this. Also Go is a pretty cool language. Though I have to say 
+not having generics in CRUD based applications feels AWFUL.
 
 # Install
 To build the server just run `go build`. To populate the databse run `go run scripts/populate.go`.

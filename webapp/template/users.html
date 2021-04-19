@@ -1,5 +1,6 @@
 {{ define "Users" }}
     {{ template "Header" }} 
+    <h2>Users List</h2>
         {{ range . }}
         <div class ="user">
             <h3><a href="users/{{ .Id }}">{{ .FirstName }} {{ .LastName }}</a></h3>

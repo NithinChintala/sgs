@@ -2,8 +2,6 @@ package model
 
 import (
 	"net/http"
-	"strconv"
-	"log"
 )
 
 type Paper struct {
@@ -16,30 +14,6 @@ type Paper struct {
 	Pages   *string `json:"pages"`
 	Doi     *string `json:"doi"`
 }
-
-func nilifyStr(str string) *string {
-	if str == "<nil>" || str == "" {
-		return nil
-	}
-	return &str
-}
-
-func mustAtoi(str string) int {
-	conv, err := strconv.Atoi(str)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return conv
-}
-
-func nilifyInt(str string) *int {
-	if str == "<nil>" || str == "" {
-		return nil
-	}
-	conv := mustAtoi(str)
-	return &conv
-}
-
 
 func PaperFromForm(r *http.Request) Paper {
 
