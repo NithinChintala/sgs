@@ -1,24 +1,26 @@
-html{
-    width: 960px;
-    display: block;
-    margin: auto;
-    overflow-y:scroll;
-    background-color:#EDEBE1;
-}
-
 body{
     font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-    background-color:#EDEBE1;
     color: #000;  
     margin:auto;
+    padding: 50px;
     width:100%;
 }
+.authors {
+    color: #006621;
+}
 
-input{
+h3 {
+    margin-bottom: 2px;
+    color: #1a0dab;
+    font-weight:normal
+}
+
+.paper {
     display: block;
-    margin: auto;
-    width:80%;
-    line-height: 30px;
+}
+
+ul#menu li {
+    display:inline;
 }
 
 img{
