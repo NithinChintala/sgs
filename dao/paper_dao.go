@@ -47,7 +47,19 @@ func GetPapersById(id int) []model.Paper {
 }
 
 func CreatePaper(paper model.Paper) {
+	connect()
+	defer db.Close()
 
+	insert :=
+	`
+	INSERT INTO papers (year, title, journal, volume, issue, pages, doi)
+	VALUES (?, ?, ?, ?, ?, ?, ?)
+	`
+	_, err := db.Exec(insert, paper.Year, paper.Title, 
+		paper.Journal, paper.Volume, paper.Issue, paper.Pages, paper.Doi)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func UpdatePaper(id int, paper model.Paper) {

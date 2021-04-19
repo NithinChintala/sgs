@@ -1,0 +1,22 @@
+{{ define "CreatePaper" }}
+    {{ template "Header" }} 
+    <form method="POST" action="/papers/create">
+        <input type="hidden" name="id" value="0" readonly/><br>
+        <label><b>Year</b></label><br>
+        <input type="text" name="year"/><br>
+        <label><b>Title</b></label><br>
+        <input type="text" name="title"/><br>
+        <label>Journal</label><br>
+        <input type="text" name="journal"/><br>
+        <label>Volume</label><br>
+        <input type="text" name="volume"/><br>
+        <label>Issue</label><br>
+        <input type="text" name="issue"/><br>
+        <label>Pages</label><br>
+        <input type="text" name="pages"/><br>
+        <label>Doi</label><br>
+        <input type="text" name="doi"/><br><br>
+        <input type="submit" value="Create paper" />
+    </form>
+    {{ template "Footer" }}
+{{ end }}

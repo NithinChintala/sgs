@@ -18,7 +18,7 @@ type Paper struct {
 }
 
 func nilifyStr(str string) *string {
-	if str == "<nil>" {
+	if str == "<nil>" || str == "" {
 		return nil
 	}
 	return &str
@@ -33,7 +33,7 @@ func mustAtoi(str string) int {
 }
 
 func nilifyInt(str string) *int {
-	if str == "<nil>" {
+	if str == "<nil>" || str == "" {
 		return nil
 	}
 	conv := mustAtoi(str)
