@@ -1,5 +1,6 @@
 {{ define "Papers" }}
     {{ template "Header" }} 
+    <a href="/papers/create">Create</a>
         {{ range . }}
         <div class ="paper">
             <h3><a href="/papers/{{ .Id }}">{{ .Title }}</a></h3>
