@@ -39,3 +39,8 @@ func (s *server) deleteTag(w http.ResponseWriter, r *http.Request) {
 	dao.DeleteTag(id)
 	http.Redirect(w, r, "/tags", 301)
 }
+
+func (s *server) getTagsByPaperId(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.URL.Query().Get("paper"))
+	s.tmpl.ExecuteTemplate(w, "Tags", dao.GetTagsByPaperId(id))
+}

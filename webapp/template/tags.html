@@ -4,7 +4,8 @@
         <div class ="tag">
             <h3><a href="/tags/{{ .Id }}">{{ .Word }}</a></h3>
             Searches: {{ .Searches }}<br>
-            Last Search: {{ .LastSearch }}
+            Last Search: {{ .LastSearch }}<br>
+            <a href="/papers?tag={{ .Word }}">papers</a>
         </div>
         {{ end }}
     {{ template "Footer" }}

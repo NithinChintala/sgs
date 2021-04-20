@@ -39,3 +39,23 @@ func (s *server) deletePaper(w http.ResponseWriter, r *http.Request) {
 	dao.DeletePaper(id)
 	http.Redirect(w, r, "/papers", 301)
 }
+
+func (s *server) getPapersByTagWord(w http.ResponseWriter, r *http.Request) {
+	word := r.URL.Query().Get("tag")
+	s.tmpl.ExecuteTemplate(w, "Papers", dao.GetPapersByTagWord(word))
+}
+
+func (s *server) getPapersByCiterId(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.URL.Query().Get("citer"))
+	s.tmpl.ExecuteTemplate(w, "Papers", dao.GetPapersByCiterId(id))
+}
+
+func (s *server) getPapersByCiteeId(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.URL.Query().Get("citee"))
+	s.tmpl.ExecuteTemplate(w, "Papers", dao.GetPapersByCiteeId(id))
+}
+
+func (s *server) getPapersByUserId(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.URL.Query().Get("author"))
+	s.tmpl.ExecuteTemplate(w, "Papers", dao.GetPapersByUserId(id))
+}

@@ -188,12 +188,13 @@ func main() {
 	configStr := "users=%d\npapers=%d\ntags=%d\nrefs=[0, %d]\nauthors=[0,%d]\nkws=[0,%d]\n\n"
 	fmt.Printf(configStr, NUM_USERS,  NUM_PAPERS, NUM_TAGS, MAX_REFS, MAX_AUTHS, MAX_TAGS)
 
-	// log.Println("Populating tables..")
-	// populate()
-	// log.Println("Creating References...")
-	// createReferences()
-	// log.Println("Creating Authors...")
-	// createAuthors()
-	// log.Println("Creating Keyword...")
-	// createKeywords()
+	log.Println("Populating tables..")
+	populate()
+	log.Println("Creating References...")
+	createReferences()
+	log.Println("Creating Authors...")
+	createAuthors()
+	log.Println("Creating Keywords...")
+	createKeywords()
+	log.Println("Done!")
 }

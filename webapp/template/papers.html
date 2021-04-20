@@ -6,9 +6,10 @@
             <h3><a href="/papers/{{ .Id }}">{{ .Title }}</a></h3>
             {{ if .Journal }} {{ .Journal }} {{ else }} No Journal {{ end }}
             {{ .Year }}, <b>{{ .Volume }}</b>({{ .Issue }}), pp. {{ .Pages }}<br>
-            <a href="/">authors</a>
-            <a href="/">refrences</a>
-            <a href="/">tags</a>
+            <a href="/users?paper={{ .Id }}">authors</a>
+            <a href="/papers?citer={{ .Id }}">refrences</a>
+            <a href="/papers?citee={{ .Id }}">cited by</a>
+            <a href="/tags?paper={{ .Id }}">tags</a>
             <br>
             <a>doi: {{ if .Doi }} {{ .Doi }} {{ end }}</a>
         </div>

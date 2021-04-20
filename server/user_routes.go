@@ -39,3 +39,8 @@ func (s *server) deleteUser(w http.ResponseWriter, r *http.Request) {
 	dao.DeleteUser(id)
 	http.Redirect(w, r, "/users", 301)
 }
+
+func (s *server) getUsersByPaperId(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(r.URL.Query().Get("paper"))
+	s.tmpl.ExecuteTemplate(w, "Users", dao.GetUsersByPaperId(id))
+}

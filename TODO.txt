@@ -27,3 +27,19 @@
     run.go
         - run()
         - setup()
+
+# Optionally
+Abstract out all the dao methods, probably like
+    func DaoQuery(table int, query, args ...interface{}) {
+        results := db.Query(query, args)
+        switch table {
+        case 1:
+            return ReadPapers(results)
+        case 2:
+            return ReadTags(results)
+        case 3:
+            return ReadUsers(results)
+        default:
+            log.Fatal("Bad table enum int")
+        }
+    }

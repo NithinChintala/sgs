@@ -83,3 +83,20 @@ func DeleteUser(id int) {
 		log.Fatal(err)
 	}
 }
+
+func GetUsersByPaperId(paperId int) []model.User {
+	connect()
+	defer db.Close()
+
+	query := `
+	SELECT users.* FROM papers, authors, users
+	WHERE papers.id = authors.paper_id 
+	AND authors.user_id = users.id 
+	AND papers.id = ?
+	`
+	results, err := db.Query(query, paperId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadUsers(results)
+}

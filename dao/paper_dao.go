@@ -3,9 +3,8 @@ package dao
 import (
 	"database/sql"
 	"github.com/NithinChintala/sgs/model"
-	"net/http"
-	"encoding/json"
 	"log"
+	"fmt"
 )
 
 func ReadPapers(result *sql.Rows) []model.Paper {
@@ -94,7 +93,7 @@ func DeletePaper(id int) {
 	}
 }
 
-func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
+func GetPapersByUserId(userId int) []model.Paper {
 	connect()
 	defer db.Close()
 
@@ -105,12 +104,41 @@ func GetPapersByUserId(w http.ResponseWriter, r *http.Request) {
 	AND users.id = ?
 	`
 
-	results, err := db.Query(query)
+	results, err := db.Query(query, userId)
 	if err != nil {
 		log.Fatal(err)
 	}
-	papers := ReadPapers(results)
-	json.NewEncoder(w).Encode(papers)
+	return ReadPapers(results)
+}
+
+func GetPapersByCiteeId(citeeId int) []model.Paper {
+	connect()
+	defer db.Close()
+
+	subQuery := "(SELECT * FROM `references` WHERE citee_id = ?) sub_query"
+	query := "SELECT papers.* FROM papers, %s WHERE papers.id = sub_query.citer_id"
+	full := fmt.Sprintf(query, subQuery)
+	
+	results, err := db.Query(full, citeeId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadPapers(results)
+}
+
+func GetPapersByCiterId(citerId int) []model.Paper {
+	connect()
+	defer db.Close()
+
+	subQuery := "(SELECT * FROM `references` WHERE citer_id = ?) sub_query"
+	query := "SELECT papers.* FROM papers, %s WHERE papers.id = sub_query.citee_id"
+	full := fmt.Sprintf(query, subQuery)
+	
+	results, err := db.Query(full, citerId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadPapers(results)
 }
 
 func GetPapersByTagWord(tag string) []model.Paper {

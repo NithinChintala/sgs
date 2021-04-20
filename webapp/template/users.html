@@ -5,7 +5,8 @@
         <div class ="user">
             <h3><a href="users/{{ .Id }}">{{ .FirstName }} {{ .LastName }}</a></h3>
             @{{ .Username }}, contact: {{ .Email }}<br>
-            Born: {{ .DateOfBirth }}
+            Born: {{ .DateOfBirth }}<br>
+            <a href="/papers?author={{ .Id }}">papers</a>
         </div>
         {{ end }}
     {{ template "Footer" }}

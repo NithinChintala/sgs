@@ -79,3 +79,20 @@ func DeleteTag(id int) {
 		log.Fatal(err)
 	}
 }
+
+func GetTagsByPaperId(paperId int) []model.Tag {
+	connect()
+	defer db.Close()
+
+	query := `
+	SELECT tags.* FROM papers, keywords, tags
+	WHERE papers.id = keywords.paper_id 
+	AND keywords.tag_id = tags.id 
+	AND papers.id = ?
+	`
+	results, err := db.Query(query, paperId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return ReadTags(results)
+}
