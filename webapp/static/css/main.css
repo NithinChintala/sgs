@@ -1,10 +1,43 @@
-/* body{
+a:link {
+    color: #1a0dab;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body{
     font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
     color: #000;  
-    margin:auto;
-    padding: 50px;
-    width:100%;
 }
+
+.paper-rels a {
+    padding-right: 10px;
+}
+
+.paper {
+    padding-bottom: 20px;
+}
+
+img{
+    display: block;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: auto;
+}
+
+#search {
+    width: 35%;
+    height: 30px;
+    font-size: 16px;
+    margin:auto;
+    display: block;
+}
+
+/*
 .authors {
     color: #006621;
 }
@@ -17,10 +50,6 @@ h3 {
 
 .paper {
     display: block;
-}
-
-ul#menu li {
-    display:inline;
 }
 
 img{
