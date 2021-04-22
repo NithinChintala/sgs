@@ -29,18 +29,20 @@ const (
 	VALUES (?, ?, ?, ?, ?)
 	`
 	INSERT_PAPER = `
-	INSERT INTO papers (year, title, volume, issue, pages)
-	VALUES (?, ?, ?, ?, ?)
+	INSERT INTO papers (year, title, journal, volume, issue, pages)
+	VALUES (?, ?, ?, ?, ?, ?)
 	`
 	INSERT_TAG = `INSERT INTO tags (word) VALUES (?)`
 
 	INSERT_AUTHOR    = "INSERT INTO authors (user_id, paper_id) VALUES (?, ?)"
 	INSERT_REFERENCE = "INSERT INTO `references` (citer_id, citee_id) VALUES (?, ?)"
 	INSERT_KEYWORD   = "INSERT INTO keywords (paper_id, tag_id) VALUES (?, ?)"
+
 )
 
 var (
 	db *sql.DB
+	journals_enum = []string {"Cell", "Nature", "Science"}
 )
 
 func check(err error) {
@@ -82,8 +84,8 @@ func populate() {
 	
 	// users
 	for i := 0; i < NUM_USERS; i++ {
-		fn := fmt.Sprintf("fn%d", rand.Int()%200)
-		ln := fmt.Sprintf("ln%d", rand.Int()%200)
+		fn := fmt.Sprintf("First%d", rand.Int()%200)
+		ln := fmt.Sprintf("Last%d", rand.Int()%200)
 		un := fmt.Sprintf("un%d", rand.Int()%200)
 		pw := fmt.Sprintf("pw%d", rand.Int()%200)
 		email := fmt.Sprintf("%s@domain%d.edu", un, rand.Int()%200)
@@ -94,18 +96,19 @@ func populate() {
 	// papers
 	for i := 0; i < NUM_PAPERS; i++ {
 		year := (rand.Int() % 61) + 1960
-		title := fmt.Sprintf("title%d", rand.Int()%200)
+		title := fmt.Sprintf("Title%d", rand.Int()%200)
+		journal := journals_enum[rand.Int() % len(journals_enum)]
 		volume := (rand.Int() % 50) + 1
 		issue := (rand.Int() % 12) + 1
 		start := (rand.Int() % 1000) + 1
 		pages := fmt.Sprintf("%d-%d", start, start+(rand.Int()%20))
 
-		_, err := db.Exec(INSERT_PAPER, year, title, volume, issue, pages)
+		_, err := db.Exec(INSERT_PAPER, year, title, journal, volume, issue, pages)
 		check(err)
 	}
 	// tags
 	for i := 0; i < NUM_TAGS; i++ {
-		_, err := db.Exec(INSERT_TAG, fmt.Sprintf("tag%d", i + 1))
+		_, err := db.Exec(INSERT_TAG, fmt.Sprintf("Tag%d", i + 1))
 		check(err)
 	}
 }
