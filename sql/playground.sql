@@ -30,11 +30,10 @@ DELETE FROM `references` WHERE id > 0;
 UPDATE `references` SET id = id - 395 WHERE id > 0;
 SELECT * FROM `references`;
 
-
-	-- papers that cite paper 32
-	SELECT papers.* 
-	FROM papers,  (SELECT * FROM `references` WHERE citee_id = 32) sub_query
-	WHERE papers.id = sub_query.citer_id;
+-- papers that cite paper 32
+SELECT papers.* 
+FROM papers,  (SELECT * FROM `references` WHERE citee_id = 32) sub_query
+WHERE papers.id = sub_query.citer_id;
 
 SELECT * FROM papers where id=32;
 
@@ -42,7 +41,6 @@ SELECT * FROM papers where id=32;
 SELECT papers.* 
 FROM papers,  (SELECT * FROM `references` WHERE citer_id = 32) sub_query
 WHERE papers.id = sub_query.citee_id;
-
 
 SELECT * FROM papers, `references` 
 WHERE papers.id = citee_id
@@ -66,6 +64,3 @@ WHERE papers.id = `references`.citer_id
 AND `references`.citer_id = 7;
 
 SELECT * FROM `sys`.sys_config;
-
-
-
