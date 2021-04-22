@@ -8,7 +8,7 @@ I worked alone for this project. My group on Canvas is `Database Design 23`,
 i'm in `CS3200 Section 04`, and my name is `Nithin Chintala`.
 
 # Description
-Please view the [uml](https://github.com/NithinChintala/sgs/blob/main/db_design_final_project_UML.pdf)
+Please view the [uml](https://github.com/NithinChintala/sgs/blob/main/submit/db_design_final_project_UML.pdf)
 
 ## User Data Model
 TODO
