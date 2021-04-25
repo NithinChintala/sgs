@@ -22,6 +22,14 @@
         <button onclick='setForm("POST","/papers/{{ .Id }}/update")'>Update</button>
         <button onclick='setForm("POST","/papers/{{ .Id }}/delete")'>Delete</button>
         <button onclick='setForm("POST","/papers/{{ .Id }}/create")'>Create</button>
+        <br>
+        <br>
+        <div class="paper-rels">
+            <a href="/users?paper={{ .Id }}">authors</a>
+            <a href="/papers?citer={{ .Id }}">refrences</a>
+            <a href="/papers?citee={{ .Id }}">cited by</a>
+            <a href="/tags?paper={{ .Id }}">tags</a><br>
+        </div>
     </form>
     {{ end }}
     {{ template "Footer" }}

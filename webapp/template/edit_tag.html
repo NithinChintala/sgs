@@ -14,6 +14,9 @@
         <button onclick='setForm("POST","/tags/{{ .Id }}/update")'>Update</button>
         <button onclick='setForm("POST","/tags/{{ .Id }}/delete")'>Delete</button>
         <button onclick='setForm("POST","/tags/{{ .Id }}/create")'>Create</button>
+        <br>
+        <br>
+        <a href="/papers?tag={{ .Word }}">papers</a>
     </form>
     {{ end }}
     {{ template "Footer" }}

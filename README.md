@@ -8,7 +8,22 @@ I worked alone for this project. My group on Canvas is `Database Design 23`,
 i'm in `CS3200 Section 04`, and my name is `Nithin Chintala`.
 
 # Description
-Please view the [uml](https://github.com/NithinChintala/sgs/blob/main/submit/db_design_final_project_UML.pdf)
+Please view the [uml](https://github.com/NithinChintala/sgs/blob/main/database/db_design_final_project_UML.pdf)
+
+SGS attempts to solve the problem of having a local database of paper to search through academic papers. There
+is a plethura of academic work online, but same may want to search through a manually currated set that can
+be created and maintained.
+
+SGS implements a simple relational database that can store relation between the core object: papers. SGS
+provides a simple UI to insert papers and view their relations with one another.
+
+The typical user for SGS would be someone in academia looking to having a personal copy of papers they
+need for their research. Other users simply looking to research papers are also a prime target user.
+
+The two core domain objects are a `paper` and `tag`. A `papaer` describes an academic work that may
+be published in a Journal, have multiple references, have multiple tags and have multiple authors.
+A tag is simply a descriptor. It can be anything really, it simply described how a group of `papers`
+can be related. So the tag `proteins` may be used on papers about protein science.
 
 ## User Data Model
 A user represents someone who may write papers. A user stores the `first name`, `last name`, `username`, 
@@ -22,7 +37,6 @@ A `paper` represents an academic writing. It contains information to uniquely id
 writing and optionally provide a doi.
 
 A `tag` represents categories or other broad ideas that can group multiple papers togethr. 
-
 
 ## User to Domain Relationship
 The `users` and `papers` table are related to one another in a many to many relationship.

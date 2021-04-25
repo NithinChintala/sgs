@@ -20,6 +20,8 @@
         <button onclick='setForm("POST","/users/{{ .Id }}/update")'>Update</button>
         <button onclick='setForm("POST","/users/{{ .Id }}/delete")'>Delete</button>
         <button onclick='setForm("POST","/users/{{ .Id }}/create")'>Create</button>
+        <br>
+        <a href="/papers?author={{ .Id }}">papers</a>
     </form>
     {{ end }}
     {{ template "Footer" }}
