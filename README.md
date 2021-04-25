@@ -66,7 +66,13 @@ Currently the available `journals` in the databse are: "Cell", "Nature" and "Sci
 `journal` can be `NULL` meaning the paper has not been published in an approved journal.
 
 ## UI
-There is a list and edit page for `papers`, `tags` and `users`.
+There is a list and edit page for `papers`, `tags` and `users`. The list pages can be accessed
+from the top header anywhere on the website. Once on the list page you can navigate to the edit
+page by clicking on the associated title for each entry in the list. Furthermore, on the list
+and edit page for any table a link to the related records in other tables are provided.
+
+Lastly, the homepage allows you to search for papers related to a certain tag serving as an
+extremely simple version of Google Scholar's search engine.
 
 # Other
 ## Motivation
