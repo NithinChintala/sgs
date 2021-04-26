@@ -25,6 +25,32 @@ be published in a Journal, have multiple references, have multiple tags and have
 A tag is simply a descriptor. It can be anything really, it simply described how a group of `papers`
 can be related. So the tag `proteins` may be used on papers about protein science.
 
+## Problem Statements / Solution
+1. What are the most cited papers in the database?
+```sql
+CREATE VIEW most_cited AS
+SELECT * 
+FROM (SELECT citee_id, count(citer_id) AS num_cited FROM `references` GROUP BY citee_id) subquery
+ORDER BY subquery.num_cited DESC;
+```
+
+2. What papers cited this paper in their work?
+```sql
+-- citee_id = <id> is refering to "this paper"
+SELECT papers.*
+FROM papers, (SELECT * FROM `references` WHERE citee_id=5) subquery
+WHERE papers.id = subquery.citer_id;
+```
+
+3. What are popular papers within a certain tag?
+```sql
+-- keywords.tag_id = <id> refers to a "certain tag"
+SELECT *
+FROM most_cited, keywords
+WHERE most_cited.citee_id = keywords.paper_id
+AND keywords.tag_id = 4
+```
+
 ## User Data Model
 A user represents someone who may write papers. A user stores the `first name`, `last name`, `username`, 
 `password`, `email` and `data of birth`. The `email` was added because it is something necessary
