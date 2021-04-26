@@ -38,8 +38,9 @@ ORDER BY subquery.num_cited DESC;
 ```sql
 -- citee_id = <id> is refering to "this paper"
 SELECT papers.*
-FROM papers, (SELECT * FROM `references` WHERE citee_id=5) subquery
-WHERE papers.id = subquery.citer_id;
+FROM papers, `references`
+WHERE papers.id = subquery.citer_id
+AND `references`.citee_id = 5;
 ```
 
 3. What are popular papers within a certain tag?
